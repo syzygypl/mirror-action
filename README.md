@@ -62,9 +62,9 @@ jobs:
         # pass job parameters
         with:
           # private ssh key of origin repo should taken from privates (see ssh key setup step)
-          originSshKey: ${{ secrets.MIRROR_SSH_KEY }}
+          originSshKey: ${{ secrets.ORIGIN_SSH_KEY }}
           # private ssh key of mirror repo should taken from privates (see ssh key setup step)
-          mirrorSshKey: ${{ secrets.ORIGIN_SSH_KEY }}
+          mirrorSshKey: ${{ secrets.MIRROR_SSH_KEY }}
           # mirror repo git url with pattern (ssh://)?(user@)?(domain)(:port)?(/|:)?(path).git 
           mirrorRepoUrl: 'git@github.com:syzygypl/mirror-action-mirror.git'
 ```
@@ -83,7 +83,7 @@ jobs:
       - name: Mirror 
         uses: syzygypl/mirror-action@master 
         with:
-          originSshKey: ${{ secrets.MIRROR_SSH_KEY }}
-          mirrorSshKey: ${{ secrets.ORIGIN_SSH_KEY }}
+          originSshKey: ${{ secrets.ORIGIN_SSH_KEY }}
+          mirrorSshKey: ${{ secrets.MIRROR_SSH_KEY }}
           mirrorRepoUrl: 'git@github.com:syzygypl/mirror-action-mirror.git'
 ```
