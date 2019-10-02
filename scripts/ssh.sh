@@ -14,9 +14,12 @@ function prepare_ssh(){
 
 function configure_ssh(){
     local repo_host="$1"
-    local private_key="$2"
+    local ip="$2"
+    local private_key="$3"
 
+    echo "" > "${SSH_CONFIG}"
     echo "Host ${repo_host}" >> "${SSH_CONFIG}"
+    echo " HostName ${ip}" >> "${SSH_CONFIG}"
     echo " LogLevel DEBUG3" >> "${SSH_CONFIG}"
     echo " IdentitiesOnly=yes" >> "${SSH_CONFIG}"
     echo " StrictHostKeyChecking=no" >> "${SSH_CONFIG}"
@@ -32,7 +35,7 @@ function create_ssh_key(){
 
 function add_to_known_hosts(){
     local host="$1"
-    local ip=$(dig +short "${host}")
+    local ip="$2"
     ssh-keygen -R "${host}"
     ssh-keygen -R "${ip}"
     ssh-keygen -R "${host},${ip}"
@@ -41,3 +44,12 @@ function add_to_known_hosts(){
     ssh-keyscan -H "${host}" >> "${KNOWN_HOSTS_FILE}"
 }
 
+function discover_host_ip(){
+    local host="$1"
+    local ip=$(dig +short "${host}")
+    if ! [[ $? -eq 0 ]]; then
+        echo "Cannot discover host"
+        exit 21;
+    fi
+    echo "$ip"
+}
