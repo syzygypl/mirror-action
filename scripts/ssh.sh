@@ -51,5 +51,5 @@ function discover_host_ip(){
         echo "Cannot discover host"
         exit 21;
     fi
-    echo "$ip"
+    echo "$ip" | head -n1
 }
