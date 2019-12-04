@@ -39,9 +39,9 @@ function add_to_known_hosts(){
     ssh-keygen -R "${host}"
     ssh-keygen -R "${ip}"
     ssh-keygen -R "${host},${ip}"
-    ssh-keyscan -H "${host},${ip}" >> "${KNOWN_HOSTS_FILE}"
-    ssh-keyscan -H "${ip}" >> "${KNOWN_HOSTS_FILE}"
-    ssh-keyscan -H "${host}" >> "${KNOWN_HOSTS_FILE}"
+    ssh-keyscan -T 30 -H "${host},${ip}" >> "${KNOWN_HOSTS_FILE}"
+    ssh-keyscan -T 30 -H "${ip}" >> "${KNOWN_HOSTS_FILE}"
+    ssh-keyscan -T 30 -H "${host}" >> "${KNOWN_HOSTS_FILE}"
 }
 
 function discover_host_ip(){
